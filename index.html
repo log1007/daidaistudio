@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的工作室网站</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+  .header { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; text-align: center; padding: 40px 20px; }
+  .header h1 { font-size: 28px; margin-bottom: 10px; }
+  .header p { font-size: 14px; opacity: 0.9; }
+  .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .card h2 { font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .card h2 button { font-size: 12px; padding: 4px 12px; border: none; border-radius: 4px; cursor: pointer; }
+  .btn-primary { background: #667eea; color: #fff; }
+  .btn-primary:hover { background: #5a6fd6; }
+  .btn-danger { background: #e74c3c; color: #fff; }
+  .btn-danger:hover { background: #c0392b; }
+  .btn-sm { font-size: 12px; padding: 3px 10px; border: none; border-radius: 4px; cursor: pointer; background: #e74c3c; color: #fff; }
+  textarea, input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; }
+  textarea { height: 80px; resize: vertical; }
+  .form-row { display: flex; gap: 10px; margin-top: 10px; }
+  .form-row input { flex: 1; }
+  .form-row button { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; background: #667eea; color: #fff; white-space: nowrap; }
+  .msg { padding: 10px; border-bottom: 1px solid #eee; }
+  .msg:last-child { border-bottom: none; }
+  .msg .name { font-weight: bold; color: #667eea; }
+  .msg .time { font-size: 12px; color: #999; margin-left: 10px; }
+  .msg .content { margin-top: 5px; white-space: pre-wrap; }
+  .notice-item { padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+  .notice-item:last-child { border-bottom: none; }
+  .file-item { padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+  .file-item:last-child { border-bottom: none; }
+  .file-item a { color: #667eea; text-decoration: none; }
+  .file-item a:hover { text-decoration: underline; }
+  .upload-row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+  .upload-row input[type="file"] { flex: 1; }
+  .upload-row button { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; background: #667eea; color: #fff; white-space: nowrap; }
+  .status { font-size: 12px; color: #999; margin-top: 5px; }
+  .status.ok { color: #27ae60; }
+  .status.err { color: #e74c3c; }
+  .admin-panel { display: none; }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 999; justify-content: center; align-items: center; }
+  .modal.show { display: flex; }
+  .modal-box { background: #fff; border-radius: 10px; padding: 25px; width: 300px; text-align: center; }
+  .modal-box input { margin: 15px 0; }
+  .modal-box button { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; margin: 0 5px; }
+  .empty { color: #999; text-align: center; padding: 20px; }
+  .footer { text-align: center; padding: 20px; color: #999; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎨 我的工作室</h1>
+  <p>欢迎来到我的个人空间</p>
+</div>
+
+<div class="container">
+
+  <!-- 公告栏 -->
+  <div class="card">
+    <h2>📢 公告栏
+      <button class="btn-primary" id="btnNoticeAdmin" onclick="openAdmin()">管理员入口</button>
+    </h2>
+    <div id="noticeList"></div>
+    <div class="admin-panel" id="noticeAdmin">
+      <div class="form-row">
+        <input type="text" id="noticeInput" placeholder="输入公告内容...">
+        <button onclick="addNotice()">发布公告</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 文件下载 -->
+  <div class="card">
+    <h2>📁 文件下载</h2>
+    <div id="fileList"></div>
+    <div class="admin-panel" id="fileAdmin">
+      <div class="upload-row">
+        <input type="file" id="fileInput">
+        <button onclick="uploadFile()">上传文件</button>
+      </div>
+      <div class="status" id="uploadStatus"></div>
+    </div>
+  </div>
+
+  <!-- 留言板 -->
+  <div class="card">
+    <h2>💬 留言板</h2>
+    <div id="msgList"></div>
+    <div style="margin-top:15px;">
+      <input type="text" id="msgName" placeholder="你的昵称" style="margin-bottom:8px;">
+      <textarea id="msgContent" placeholder="写下你想说的话..."></textarea>
+      <div class="form-row">
+        <button onclick="addMessage()" style="flex:1;">发表留言</button>
+      </div>
+      <div class="status" id="msgStatus"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">由 Supabase 驱动 · 数据实时同步</div>
+
+<!-- 管理员密码弹窗 -->
+<div class="modal" id="adminModal">
+  <div class="modal-box">
+    <h3>管理员验证</h3>
+    <input type="password" id="adminPwd" placeholder="请输入管理密码">
+    <div>
+      <button class="btn-primary" onclick="checkAdmin()">确认</button>
+      <button onclick="closeAdmin()">取消</button>
+    </div>
+    <div class="status" id="adminStatus"></div>
+  </div>
+</div>
+
+<script type="module">
+// ==================== 配置区域 ====================
+// 把下面两行替换成你自己的 Supabase 信息
+const SUPABASE_URL = https://supabase.co/dashboard/project/aebyvmioqeiolbccfflg/settings/api-keys
+const SUPABASE_ANON_KEY = sb_publishable_mpD6_6aOCfHV833RBUTOaQ_uqFPlJbC
+const STORAGE_BUCKET = 'files';
+const ADMIN_PASSWORD = 'admin123'; // 管理密码，可自行修改
+// ================================================
+
+let supabase = null;
+let isAdmin = false;
+
+// 初始化 Supabase 客户端
+async function initSupabase() {
+  if (SUPABASE_URL.includes('YOUR_PROJECT_REF')) {
+    showStatus('msgStatus', '⚠️ 未配置 Supabase，页面以离线模式运行', 'err');
+    return;
+  }
+  try {
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    showStatus('msgStatus', '✅ 已连接云端', 'ok');
+    loadNotices();
+    loadFiles();
+    loadMessages();
+  } catch (e) {
+    showStatus('msgStatus', '⚠️ Supabase 连接失败: ' + e.message, 'err');
+  }
+}
+
+// 显示状态提示
+function showStatus(elId, text, type) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'status ' + (type || '');
+}
+
+// 加载公告
+async function loadNotices() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from('site_data')
+    .select('*')
+    .eq('type', 'notice')
+    .order('created_at', { ascending: false });
+  const list = document.getElementById('noticeList');
+  if (error || !data || data.length === 0) {
+    list.innerHTML = '<div class="empty">暂无公告</div>';
+    return;
+  }
+  list.innerHTML = data.map(item => `
+    <div class="notice-item">
+      <span>${escapeHtml(item.content)}</span>
+      ${isAdmin ? `<button class="btn-sm" onclick="deleteItem(${item.id})">删除</button>` : ''}
+    </div>
+  `).join('');
+}
+
+// 加载文件列表
+async function loadFiles() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from('site_data')
+    .select('*')
+    .eq('type', 'file')
+    .order('created_at', { ascending: false });
+  const list = document.getElementById('fileList');
+  if (error || !data || data.length === 0) {
+    list.innerHTML = '<div class="empty">暂无文件</div>';
+    return;
+  }
+  list.innerHTML = data.map(item => {
+    const url = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(item.file_path || item.content).data.publicUrl;
+    return `
+    <div class="file-item">
+      <a href="${url}" target="_blank">📄 ${escapeHtml(item.title || item.content)}</a>
+      ${isAdmin ? `<button class="btn-sm" onclick="deleteFile(${item.id}, '${item.file_path || ''}')">删除</button>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// 加载留言
+async function loadMessages() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from('site_data')
+    .select('*')
+    .eq('type', 'message')
+    .order('created_at', { ascending: false })
+    .limit(100);
+  const list = document.getElementById('msgList');
+  if (error || !data || data.length === 0) {
+    list.innerHTML = '<div class="empty">暂无留言，快来发第一条吧！</div>';
+    return;
+  }
+  list.innerHTML = data.map(item => `
+    <div class="msg">
+      <span class="name">${escapeHtml(item.title || '匿名')}</span>
+      <span class="time">${new Date(item.created_at).toLocaleString('zh-CN')}</span>
+      ${isAdmin ? `<button class="btn-sm" style="float:right;" onclick="deleteItem(${item.id})">删除</button>` : ''}
+      <div class="content">${escapeHtml(item.content)}</div>
+    </div>
+  `).join('');
+}
+
+// 发布公告
+window.addNotice = async function() {
+  const input = document.getElementById('noticeInput');
+  const content = input.value.trim();
+  if (!content) return alert('请输入公告内容');
+  if (!supabase) return alert('未连接 Supabase');
+  const { error } = await supabase.from('site_data').insert({ type: 'notice', content });
+  if (error) return alert('发布失败: ' + error.message);
+  input.value = '';
+  loadNotices();
+};
+
+// 发表留言
+window.addMessage = async function() {
+  const name = document.getElementById('msgName').value.trim() || '匿名';
+  const content = document.getElementById('msgContent').value.trim();
+  if (!content) return alert('请输入留言内容');
+  if (!supabase) return alert('未连接 Supabase');
+  showStatus('msgStatus', '发送中...', '');
+  const { error } = await supabase.from('site_data').insert({ type: 'message', title: name, content });
+  if (error) { showStatus('msgStatus', '发送失败: ' + error.message, 'err'); return; }
+  document.getElementById('msgContent').value = '';
+  showStatus('msgStatus', '✅ 留言已发送', 'ok');
+  loadMessages();
+};
+
+// 上传文件
+window.uploadFile = async function() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+  if (!file) return alert('请选择文件');
+  if (!supabase) return alert('未连接 Supabase');
+  showStatus('uploadStatus', '上传中...', '');
+  const fileName = Date.now() + '_' + file.name;
+  const { error: uploadErr } = await supabase.storage.from(STORAGE_BUCKET).upload(fileName, file);
+  if (uploadErr) { showStatus('uploadStatus', '上传失败: ' + uploadErr.message, 'err'); return; }
+  const { error: dbErr } = await supabase.from('site_data').insert({ type: 'file', title: file.name, content: file.name, file_path: fileName });
+  if (dbErr) { showStatus('uploadStatus', '记录失败: ' + dbErr.message, 'err'); return; }
+  fileInput.value = '';
+  showStatus('uploadStatus', '✅ 上传成功', 'ok');
+  loadFiles();
+};
+
+// 删除数据
+window.deleteItem = async function(id) {
+  if (!confirm('确定删除？')) return;
+  if (!supabase) return;
+  const { error } = await supabase.from('site_data').delete().eq('id', id);
+  if (error) return alert('删除失败: ' + error.message);
+  loadNotices(); loadMessages();
+};
+
+// 删除文件
+window.deleteFile = async function(id, filePath) {
+  if (!confirm('确定删除此文件？')) return;
+  if (!supabase) return;
+  if (filePath) await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
+  const { error } = await supabase.from('site_data').delete().eq('id', id);
+  if (error) return alert('删除失败: ' + error.message);
+  loadFiles();
+};
+
+// 管理员
+window.openAdmin = function() {
+  document.getElementById('adminModal').classList.add('show');
+  document.getElementById('adminPwd').value = '';
+  document.getElementById('adminStatus').textContent = '';
+};
+window.closeAdmin = function() {
+  document.getElementById('adminModal').classList.remove('show');
+};
+window.checkAdmin = function() {
+  const pwd = document.getElementById('adminPwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    isAdmin = true;
+    closeAdmin();
+    document.querySelectorAll('.admin-panel').forEach(el => el.style.display = 'block');
+    document.getElementById('btnNoticeAdmin').textContent = '已登录管理';
+    loadNotices(); loadFiles(); loadMessages();
+  } else {
+    document.getElementById('adminStatus').textContent = '密码错误';
+    document.getElementById('adminStatus').className = 'status err';
+  }
+};
+
+// HTML 转义
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// 页面加载时初始化
+initSupabase();
+</script>
+</body>
+</html>

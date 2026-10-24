@@ -3,452 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>呆呆工作室</title>
+<title>我的工作室网站</title>
 <style>
-:root {
-  --bg: #f5f6f8;
-  --card: #ffffff;
-  --text: #1f2329;
-  --text-2: #646a73;
-  --text-3: #8f959e;
-  --primary: #3370ff;
-  --primary-hover: #2b5fd9;
-  --primary-bg: #eef3ff;
-  --primary-text: #3370ff;
-  --on-primary: #ffffff;
-  --border: #e5e6eb;
-  --border-2: #f0f1f3;
-  --success: #34c724;
-  --error: #f54a45;
-  --warning-bg: #fff7e6;
-  --warning-text: #b26b00;
-  --warning-border: #ffe4ba;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-  background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6;
-}
-.wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
-header { text-align: center; padding: 28px 0 8px; }
-header h1 { font-size: 26px; font-weight: 600; letter-spacing: 1px; }
-header p { color: var(--text-2); margin-top: 6px; font-size: 13px; }
-.demo-banner {
-  margin: 16px 0; padding: 10px 14px; border-radius: 8px;
-  background: var(--warning-bg); color: var(--warning-text);
-  border: 1px solid var(--warning-border); font-size: 12px; text-align: center;
-}
-.card {
-  background: var(--card); border: 1px solid var(--border-2);
-  border-radius: 12px; padding: 20px; margin-bottom: 20px;
-}
-.card h2 { font-size: 17px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-.card h2 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); display: inline-block; }
-.form-group { margin-bottom: 12px; }
-.form-label { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 5px; font-weight: 500; }
-.form-input, .form-textarea {
-  width: 100%; padding: 9px 12px; background: #fafafa;
-  border: 1px solid var(--border); border-radius: 8px;
-  color: var(--text); font-size: 14px; outline: none; font-family: inherit;
-}
-.form-textarea { resize: vertical; min-height: 88px; }
-.form-input:focus, .form-textarea:focus { border-color: var(--primary); background: #fff; }
-.btn {
-  padding: 9px 20px; border: none; border-radius: 8px; cursor: pointer;
-  font-size: 14px; font-weight: 500; font-family: inherit;
-}
-.btn-primary { background: var(--primary); color: var(--on-primary); }
-.btn-primary:hover { background: var(--primary-hover); }
-.btn-ghost { background: transparent; color: var(--primary-text); border: 1px solid var(--primary); }
-.btn-small { padding: 5px 12px; font-size: 12px; border-radius: 6px; }
-.list { margin-top: 16px; }
-.item {
-  padding: 14px 0; border-top: 1px solid var(--border-2);
-}
-.item-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
-.item-name { font-weight: 600; font-size: 14px; }
-.item-time { font-size: 12px; color: var(--text-3); }
-.item-content { color: var(--text-2); white-space: pre-wrap; word-break: break-word; }
-.file-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 0; border-top: 1px solid var(--border-2);
-}
-.file-icon {
-  width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0;
-  background: var(--primary-bg); color: var(--primary-text);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 600;
-}
-.file-info { flex: 1; min-width: 0; }
-.file-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.file-meta { font-size: 12px; color: var(--text-3); }
-.file-actions { display: flex; gap: 8px; flex-shrink: 0; }
-.empty { text-align: center; color: var(--text-3); padding: 24px 0; font-size: 13px; }
-.dropzone {
-  border: 1.5px dashed var(--border); border-radius: 10px;
-  padding: 28px 16px; text-align: center; color: var(--text-2);
-  cursor: pointer; transition: border-color .15s, background .15s;
-}
-.dropzone:hover, .dropzone.over { border-color: var(--primary); background: var(--primary-bg); }
-.dropzone .plus { font-size: 26px; color: var(--primary); line-height: 1; margin-bottom: 6px; }
-.dropzone .hint { font-size: 12px; color: var(--text-3); margin-top: 4px; }
-footer {
-  text-align: center; color: var(--text-3); font-size: 12px;
-  margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--border-2);
-}
-.wechat {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 14px; border-radius: 999px; background: var(--primary-bg);
-  color: var(--primary-text); font-size: 13px; margin-top: 4px;
-}
-.toast {
-  position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
-  padding: 9px 18px; background: var(--card); color: var(--success);
-  border: 1px solid var(--border); border-radius: 8px; font-size: 13px;
-  display: none; z-index: 99;
-}
-@media (max-width: 600px) {
-  .wrap { padding: 12px 12px 40px; }
-  header h1 { font-size: 22px; }
-  .card { padding: 16px; }
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Microsoft YaHei", sans-serif; background: #f5f5f5; color: #333; }
+  .header { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; text-align: center; padding: 40px 20px; }
+  .header h1 { font-size: 28px; margin-bottom: 10px; }
+  .header p { font-size: 14px; opacity: 0.9; }
+  .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .card h2 { font-size: 18px; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+  .card h2 button { font-size: 12px; padding: 4px 12px; border: none; border-radius: 4px; cursor: pointer; }
+  .btn-primary { background: #667eea; color: #fff; }
+  .btn-primary:hover { background: #5a6fd6; }
+  .btn-danger { background: #e74c3c; color: #fff; }
+  .btn-danger:hover { background: #c0392b; }
+  .btn-sm { font-size: 12px; padding: 3px 10px; border: none; border-radius: 4px; cursor: pointer; background: #e74c3c; color: #fff; }
+  textarea, input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; }
+  textarea { height: 80px; resize: vertical; }
+  .form-row { display: flex; gap: 10px; margin-top: 10px; }
+  .form-row input { flex: 1; }
+  .form-row button { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; background: #667eea; color: #fff; white-space: nowrap; }
+  .msg { padding: 10px; border-bottom: 1px solid #eee; }
+  .msg:last-child { border-bottom: none; }
+  .msg .name { font-weight: bold; color: #667eea; }
+  .msg .time { font-size: 12px; color: #999; margin-left: 10px; }
+  .msg .content { margin-top: 5px; white-space: pre-wrap; }
+  .notice-item { padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+  .notice-item:last-child { border-bottom: none; }
+  .file-item { padding: 8px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+  .file-item:last-child { border-bottom: none; }
+  .file-item a { color: #667eea; text-decoration: none; }
+  .file-item a:hover { text-decoration: underline; }
+  .upload-row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+  .upload-row input[type="file"] { flex: 1; }
+  .upload-row button { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; background: #667eea; color: #fff; white-space: nowrap; }
+  .status { font-size: 12px; color: #999; margin-top: 5px; }
+  .status.ok { color: #27ae60; }
+  .status.err { color: #e74c3c; }
+  .admin-panel { display: none; }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 999; justify-content: center; align-items: center; }
+  .modal.show { display: flex; }
+  .modal-box { background: #fff; border-radius: 10px; padding: 25px; width: 300px; text-align: center; }
+  .modal-box input { margin: 15px 0; }
+  .modal-box button { padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; margin: 0 5px; }
+  .empty { color: #999; text-align: center; padding: 20px; }
+  .footer { text-align: center; padding: 20px; color: #999; font-size: 13px; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>呆呆工作室</h1>
-    <p>留下你的想法，或下载需要的资料</p>
-    <div><span class="wechat">微信：（此处为占位，稍后替换）</span></div>
-  </header>
 
-  <div class="demo-banner">提示：留言为演示模式，内容仅保存在访客自己的浏览器中；文件区访客仅可下载。</div>
-
-  <div class="card">
-    <h2><span class="dot"></span>公告栏</h2>
-    <div class="list" id="ann-list" style="margin-top:0"></div>
-  </div>
-
-  <div class="card">
-    <h2><span class="dot"></span>留言板</h2>
-    <div class="form-group">
-      <label class="form-label">你的称呼</label>
-      <input class="form-input" id="m-name" type="text" maxlength="20" placeholder="怎么称呼你？（可不填）">
-    </div>
-    <div class="form-group">
-      <label class="form-label">留言内容</label>
-      <textarea class="form-textarea" id="m-content" maxlength="500" placeholder="写下你想说的话…"></textarea>
-    </div>
-    <div style="text-align:right">
-      <button class="btn btn-primary" onclick="postMessage()">发表留言</button>
-    </div>
-    <div class="list" id="msg-list"></div>
-  </div>
-
-  <div class="card">
-    <h2><span class="dot"></span>文件下载</h2>
-    <div id="admin-zone" style="display:none">
-      <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
-        <div class="plus">＋</div>
-        <div>点击选择文件，或把文件拖到这里</div>
-        <div class="hint">上传后仅本机预览；要让所有访客可下载，请把文件发给千问办公助手重新发布</div>
-      </div>
-      <input type="file" id="file-input" multiple style="display:none">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px">
-        <span style="font-size:12px;color:var(--text-3)">第一次保存需选择一次文件位置，之后每次点「保存页面」会直接覆盖该文件</span>
-        <button class="btn btn-primary btn-small" onclick="savePage()">保存页面</button>
-      </div>
-    </div>
-    <div class="list" id="file-list"></div>
-  </div>
-
-  <footer>呆呆工作室 · <a href="javascript:void(0)" onclick="adminLogin()" style="color:var(--text-3)">管理入口</a></footer>
+<div class="header">
+  <h1>🎨 我的工作室</h1>
+  <p>欢迎来到我的个人空间</p>
 </div>
-<div class="toast" id="toast"></div>
 
-<script>
-var messages = [
-  { name: "小蒙", time: "刚刚", content: "页面真不错，留言功能很好用！" },
-  { name: "访客", time: "2 小时前", content: "资料下载很方便，感谢分享～" }
-];
-var files = [
-  { name: "示例文件.pdf", size: "1.2 MB", time: "昨天 20:15", url: null }
-];
-var admin = false;
-var ADMIN_PASSWORD = "daidai159";
+<div class="container">
 
-var ANN_KEY = "dd-studio-announcements";
-var announcements;
-try { announcements = JSON.parse(localStorage.getItem(ANN_KEY)); } catch (e) { announcements = null; }
-if (!announcements || !announcements.length) {
-  announcements = [{ content: "欢迎来到呆呆工作室！公告内容后续由管理员发布。", time: "10-25" }];
-}
-function saveAnns() {
-  try { localStorage.setItem(ANN_KEY, JSON.stringify(announcements)); } catch (e) {}
-}
-function publishAnn() {
-  if (!admin) { showToast("仅管理员可发布公告"); return; }
-  var t = prompt("请输入公告内容");
-  if (t === null) return;
-  t = t.trim();
-  if (!t) { showToast("公告内容不能为空"); return; }
-  announcements.unshift({ content: t, time: now() });
-  saveAnns();
-  renderAnns();
-  showToast("公告已发布");
-}
-function removeAnn(i) {
-  if (!admin) { showToast("仅管理员可删除公告"); return; }
-  announcements.splice(i, 1);
-  saveAnns();
-  renderAnns();
-}
-function renderAnns() {
-  var box = document.getElementById("ann-list");
-  if (!box) return;
-  if (!announcements.length) { box.innerHTML = '<div class="empty">暂无公告</div>' + annAdminBtn(); return; }
-  box.innerHTML = announcements.map(function (a, i) {
-    return '<div class="item"><div class="item-head"><span class="item-name" style="color:var(--primary-text)">公告</span>'
-      + '<span class="item-time">' + esc(a.time)
-      + (admin ? ' <a href="javascript:void(0)" onclick="removeAnn(' + i + ')" style="margin-left:10px;color:var(--error)">删除</a>' : '')
-      + '</span></div>'
-      + '<div class="item-content">' + esc(a.content) + '</div></div>';
-  }).join("") + annAdminBtn();
-}
-function annAdminBtn() {
-  return admin ? '<div style="text-align:right;padding-top:12px"><button class="btn btn-primary btn-small" onclick="publishAnn()">发布公告</button></div>' : '';
-}
+  <!-- 公告栏 -->
+  <div class="card">
+    <h2>📢 公告栏
+      <button class="btn-primary" id="btnNoticeAdmin" onclick="openAdmin()">管理员入口</button>
+    </h2>
+    <div id="noticeList"></div>
+    <div class="admin-panel" id="noticeAdmin">
+      <div class="form-row">
+        <input type="text" id="noticeInput" placeholder="输入公告内容...">
+        <button onclick="addNotice()">发布公告</button>
+      </div>
+    </div>
+  </div>
 
-function savePage() {
-  if (!admin) { showToast("仅管理员可保存页面"); return; }
-  var clone = document.documentElement.cloneNode(true);
-  var lists = clone.querySelectorAll("#ann-list,#msg-list,#file-list");
-  for (var i = 0; i < lists.length; i++) lists[i].innerHTML = "";
-  var az = clone.querySelector("#admin-zone");
-  if (az) az.style.display = "none";
-  var ts = clone.querySelector("#toast");
-  if (ts) ts.style.display = "none";
-  var sc = clone.querySelector("script");
-  var src = sc.textContent;
-  function replBlock(s, startMark, endMark, newTxt) {
-    var a = s.indexOf(startMark);
-    if (a < 0) return s;
-    var b = s.indexOf(endMark, a);
-    if (b < 0) return s;
-    return s.slice(0, a) + newTxt + s.slice(b + endMark.length);
-  }
-  var saveFiles = files.map(function (f) {
-    return { name: f.name, size: f.size, time: f.time, url: null };
-  });
-  src = replBlock(src, "var messages = [", "];", "var messages = " + JSON.stringify(messages));
-  src = replBlock(src, "var files = [", "];", "var files = " + JSON.stringify(saveFiles));
-  src = replBlock(src, "var ANN_KEY", "function saveAnns() {",
-    'var ANN_KEY = "dd-studio-announcements";\nvar announcements = ' + JSON.stringify(announcements) + ";\n");
-  sc.textContent = src;
-  var html = "<!DOCTYPE html>\n" + clone.outerHTML;
-  writePage(html);
-}
+  <!-- 文件下载 -->
+  <div class="card">
+    <h2>📁 文件下载</h2>
+    <div id="fileList"></div>
+    <div class="admin-panel" id="fileAdmin">
+      <div class="upload-row">
+        <input type="file" id="fileInput">
+        <button onclick="uploadFile()">上传文件</button>
+      </div>
+      <div class="status" id="uploadStatus"></div>
+    </div>
+  </div>
 
-var _pageHandle = null;
-function idbWithStore(mode, fn) {
-  if (!window.indexedDB) { fn(null); return; }
-  var rq = indexedDB.open("dd-studio", 1);
-  rq.onupgradeneeded = function () { rq.result.createObjectStore("kv"); };
-  rq.onsuccess = function () {
-    try {
-      var tx = rq.result.transaction("kv", mode);
-      fn(tx.objectStore("kv"));
-    } catch (e) { fn(null); }
-  };
-  rq.onerror = function () { fn(null); };
-}
-function idbGetHandle() {
-  idbWithStore("readonly", function (s) {
-    if (!s) return;
-    var g = s.get("pageFile");
-    g.onsuccess = function () { if (g.result) _pageHandle = g.result; };
-  });
-}
-function idbPutHandle() {
-  idbWithStore("readwrite", function (s) {
-    if (s && _pageHandle) { try { s.put(_pageHandle, "pageFile"); } catch (e) {} }
-  });
-}
-function fallbackSave(html) {
-  var blob = new Blob([html], { type: "text/html;charset=utf-8" });
-  var a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "index.html";
-  document.body.appendChild(a); a.click(); a.remove();
-  showToast("已下载 index.html（当前浏览器不支持直接覆盖）");
-}
-function doWrite(h, html) {
-  h.createWritable().then(function (w) {
-    return w.write(html).then(function () { return w.close(); });
-  }).then(function () {
-    showToast("已保存并覆盖 index.html，发给助手重新发布即可");
-  }).catch(function (e) {
-    showSaveFilePicker({
-      suggestedName: "index.html",
-      types: [{ description: "网页文件", accept: { "text/html": [".html"] } }]
-    }).then(function (h2) {
-      _pageHandle = h2;
-      idbPutHandle();
-      return h2.createWritable().then(function (w) {
-        return w.write(html).then(function () { return w.close(); });
-      });
-    }).then(function () {
-      showToast("已保存并覆盖 index.html，发给助手重新发布即可");
-    }).catch(function () {});
-  });
-}
-function writePage(html) {
-  if (!window.showSaveFilePicker) { fallbackSave(html); return; }
-  if (_pageHandle) {
-    doWrite(_pageHandle, html);
+  <!-- 留言板 -->
+  <div class="card">
+    <h2>💬 留言板</h2>
+    <div id="msgList"></div>
+    <div style="margin-top:15px;">
+      <input type="text" id="msgName" placeholder="你的昵称" style="margin-bottom:8px;">
+      <textarea id="msgContent" placeholder="写下你想说的话..."></textarea>
+      <div class="form-row">
+        <button onclick="addMessage()" style="flex:1;">发表留言</button>
+      </div>
+      <div class="status" id="msgStatus"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">由 Supabase 驱动 · 数据实时同步</div>
+
+<!-- 管理员密码弹窗 -->
+<div class="modal" id="adminModal">
+  <div class="modal-box">
+    <h3>管理员验证</h3>
+    <input type="password" id="adminPwd" placeholder="请输入管理密码">
+    <div>
+      <button class="btn-primary" onclick="checkAdmin()">确认</button>
+      <button onclick="closeAdmin()">取消</button>
+    </div>
+    <div class="status" id="adminStatus"></div>
+  </div>
+</div>
+
+<script type="module">
+// ==================== 配置区域 ====================
+// 把下面两行替换成你自己的 Supabase 信息
+const SUPABASE_URL = https://log1007.github.io/daidaistudio/
+const SUPABASE_ANON_KEY = sb_publishable_mpD6_6aOCfHV833RBUTOaQ_uqFPlJbC
+const STORAGE_BUCKET = 'files';
+const ADMIN_PASSWORD = 'admin123'; // 管理密码，可自行修改
+// ================================================
+
+let supabase = null;
+let isAdmin = false;
+
+// 初始化 Supabase 客户端
+async function initSupabase() {
+  if (SUPABASE_URL.includes('YOUR_PROJECT_REF')) {
+    showStatus('msgStatus', '⚠️ 未配置 Supabase，页面以离线模式运行', 'err');
     return;
   }
-  showSaveFilePicker({
-    suggestedName: "index.html",
-    types: [{ description: "网页文件", accept: { "text/html": [".html"] } }]
-  }).then(function (h) {
-    _pageHandle = h;
-    idbPutHandle();
-    doWrite(h, html);
-  }).catch(function () {});
+  try {
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    showStatus('msgStatus', '✅ 已连接云端', 'ok');
+    loadNotices();
+    loadFiles();
+    loadMessages();
+  } catch (e) {
+    showStatus('msgStatus', '⚠️ Supabase 连接失败: ' + e.message, 'err');
+  }
 }
 
-function adminLogin() {
-  if (admin) { showToast("已是管理模式"); return; }
-  var p = prompt("请输入管理密码");
-  if (p === null) return;
-  if (p === ADMIN_PASSWORD) {
-    admin = true;
-    document.getElementById("admin-zone").style.display = "block";
-    renderMsgs();
-    renderAnns();
-    renderFiles();
-    showToast("管理模式已开启：可删除留言、发布/删除公告、上传文件");
+// 显示状态提示
+function showStatus(elId, text, type) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'status ' + (type || '');
+}
+
+// 加载公告
+async function loadNotices() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from('site_data')
+    .select('*')
+    .eq('type', 'notice')
+    .order('created_at', { ascending: false });
+  const list = document.getElementById('noticeList');
+  if (error || !data || data.length === 0) {
+    list.innerHTML = '<div class="empty">暂无公告</div>';
+    return;
+  }
+  list.innerHTML = data.map(item => `
+    <div class="notice-item">
+      <span>${escapeHtml(item.content)}</span>
+      ${isAdmin ? `<button class="btn-sm" onclick="deleteItem(${item.id})">删除</button>` : ''}
+    </div>
+  `).join('');
+}
+
+// 加载文件列表
+async function loadFiles() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from('site_data')
+    .select('*')
+    .eq('type', 'file')
+    .order('created_at', { ascending: false });
+  const list = document.getElementById('fileList');
+  if (error || !data || data.length === 0) {
+    list.innerHTML = '<div class="empty">暂无文件</div>';
+    return;
+  }
+  list.innerHTML = data.map(item => {
+    const url = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(item.file_path || item.content).data.publicUrl;
+    return `
+    <div class="file-item">
+      <a href="${url}" target="_blank">📄 ${escapeHtml(item.title || item.content)}</a>
+      ${isAdmin ? `<button class="btn-sm" onclick="deleteFile(${item.id}, '${item.file_path || ''}')">删除</button>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// 加载留言
+async function loadMessages() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from('site_data')
+    .select('*')
+    .eq('type', 'message')
+    .order('created_at', { ascending: false })
+    .limit(100);
+  const list = document.getElementById('msgList');
+  if (error || !data || data.length === 0) {
+    list.innerHTML = '<div class="empty">暂无留言，快来发第一条吧！</div>';
+    return;
+  }
+  list.innerHTML = data.map(item => `
+    <div class="msg">
+      <span class="name">${escapeHtml(item.title || '匿名')}</span>
+      <span class="time">${new Date(item.created_at).toLocaleString('zh-CN')}</span>
+      ${isAdmin ? `<button class="btn-sm" style="float:right;" onclick="deleteItem(${item.id})">删除</button>` : ''}
+      <div class="content">${escapeHtml(item.content)}</div>
+    </div>
+  `).join('');
+}
+
+// 发布公告
+window.addNotice = async function() {
+  const input = document.getElementById('noticeInput');
+  const content = input.value.trim();
+  if (!content) return alert('请输入公告内容');
+  if (!supabase) return alert('未连接 Supabase');
+  const { error } = await supabase.from('site_data').insert({ type: 'notice', content });
+  if (error) return alert('发布失败: ' + error.message);
+  input.value = '';
+  loadNotices();
+};
+
+// 发表留言
+window.addMessage = async function() {
+  const name = document.getElementById('msgName').value.trim() || '匿名';
+  const content = document.getElementById('msgContent').value.trim();
+  if (!content) return alert('请输入留言内容');
+  if (!supabase) return alert('未连接 Supabase');
+  showStatus('msgStatus', '发送中...', '');
+  const { error } = await supabase.from('site_data').insert({ type: 'message', title: name, content });
+  if (error) { showStatus('msgStatus', '发送失败: ' + error.message, 'err'); return; }
+  document.getElementById('msgContent').value = '';
+  showStatus('msgStatus', '✅ 留言已发送', 'ok');
+  loadMessages();
+};
+
+// 上传文件
+window.uploadFile = async function() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+  if (!file) return alert('请选择文件');
+  if (!supabase) return alert('未连接 Supabase');
+  showStatus('uploadStatus', '上传中...', '');
+  const fileName = Date.now() + '_' + file.name;
+  const { error: uploadErr } = await supabase.storage.from(STORAGE_BUCKET).upload(fileName, file);
+  if (uploadErr) { showStatus('uploadStatus', '上传失败: ' + uploadErr.message, 'err'); return; }
+  const { error: dbErr } = await supabase.from('site_data').insert({ type: 'file', title: file.name, content: file.name, file_path: fileName });
+  if (dbErr) { showStatus('uploadStatus', '记录失败: ' + dbErr.message, 'err'); return; }
+  fileInput.value = '';
+  showStatus('uploadStatus', '✅ 上传成功', 'ok');
+  loadFiles();
+};
+
+// 删除数据
+window.deleteItem = async function(id) {
+  if (!confirm('确定删除？')) return;
+  if (!supabase) return;
+  const { error } = await supabase.from('site_data').delete().eq('id', id);
+  if (error) return alert('删除失败: ' + error.message);
+  loadNotices(); loadMessages();
+};
+
+// 删除文件
+window.deleteFile = async function(id, filePath) {
+  if (!confirm('确定删除此文件？')) return;
+  if (!supabase) return;
+  if (filePath) await supabase.storage.from(STORAGE_BUCKET).remove([filePath]);
+  const { error } = await supabase.from('site_data').delete().eq('id', id);
+  if (error) return alert('删除失败: ' + error.message);
+  loadFiles();
+};
+
+// 管理员
+window.openAdmin = function() {
+  document.getElementById('adminModal').classList.add('show');
+  document.getElementById('adminPwd').value = '';
+  document.getElementById('adminStatus').textContent = '';
+};
+window.closeAdmin = function() {
+  document.getElementById('adminModal').classList.remove('show');
+};
+window.checkAdmin = function() {
+  const pwd = document.getElementById('adminPwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    isAdmin = true;
+    closeAdmin();
+    document.querySelectorAll('.admin-panel').forEach(el => el.style.display = 'block');
+    document.getElementById('btnNoticeAdmin').textContent = '已登录管理';
+    loadNotices(); loadFiles(); loadMessages();
   } else {
-    showToast("密码错误");
+    document.getElementById('adminStatus').textContent = '密码错误';
+    document.getElementById('adminStatus').className = 'status err';
   }
+};
+
+// HTML 转义
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }
 
-function fmtSize(n) {
-  if (n < 1024) return n + " B";
-  if (n < 1048576) return (n / 1024).toFixed(1) + " KB";
-  return (n / 1048576).toFixed(1) + " MB";
-}
-function now() {
-  var d = new Date();
-  function p(x) { return (x < 10 ? "0" : "") + x; }
-  return p(d.getMonth() + 1) + "-" + p(d.getDate()) + " " + p(d.getHours()) + ":" + p(d.getMinutes());
-}
-function showToast(msg) {
-  var t = document.getElementById("toast");
-  t.textContent = msg;
-  t.style.display = "block";
-  clearTimeout(t._h);
-  t._h = setTimeout(function () { t.style.display = "none"; }, 2200);
-}
-
-function renderMsgs() {
-  var box = document.getElementById("msg-list");
-  if (!messages.length) { box.innerHTML = '<div class="empty">还没有留言，来抢沙发～</div>'; return; }
-  box.innerHTML = messages.map(function (m, i) {
-    return '<div class="item"><div class="item-head"><span class="item-name">'
-      + esc(m.name) + '</span><span class="item-time">' + esc(m.time)
-      + (admin ? ' <a href="javascript:void(0)" onclick="removeMsg(' + i + ')" style="margin-left:10px;color:var(--error)">删除</a>' : '')
-      + '</span></div>'
-      + '<div class="item-content">' + esc(m.content) + '</div></div>';
-  }).join("");
-}
-function removeMsg(i) {
-  if (!admin) { showToast("仅管理员可删除留言"); return; }
-  messages.splice(i, 1);
-  renderMsgs();
-  showToast("留言已删除");
-}
-function renderFiles() {
-  var box = document.getElementById("file-list");
-  if (!files.length) { box.innerHTML = '<div class="empty">还没有文件</div>'; return; }
-  box.innerHTML = files.map(function (f, i) {
-    var ext = (f.name.split(".").pop() || "文件").toUpperCase().slice(0, 4);
-    return '<div class="file-item">'
-      + '<div class="file-icon">' + esc(ext) + '</div>'
-      + '<div class="file-info"><div class="file-name">' + esc(f.name) + '</div>'
-      + '<div class="file-meta">' + esc(f.size) + ' · ' + esc(f.time) + '</div></div>'
-      + '<div class="file-actions">'
-      + '<button class="btn btn-primary btn-small" onclick="downloadFile(' + i + ')">下载</button>'
-      + (admin ? '<button class="btn btn-ghost btn-small" onclick="removeFile(' + i + ')">删除</button>' : '')
-      + '</div></div>';
-  }).join("");
-}
-function esc(s) {
-  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
-    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-  });
-}
-
-function postMessage() {
-  var name = document.getElementById("m-name").value.trim();
-  var content = document.getElementById("m-content").value.trim();
-  if (!content) { showToast("留言内容不能为空"); return; }
-  messages.unshift({ name: name || "访客", content: content, time: now() });
-  document.getElementById("m-name").value = "";
-  document.getElementById("m-content").value = "";
-  renderMsgs();
-  showToast("留言发表成功");
-}
-
-function addFiles(list) {
-  var ok = 0;
-  for (var i = 0; i < list.length; i++) {
-    (function (f) {
-      if (f.size > 20 * 1048576) { showToast("「" + f.name + "」超过 20MB，已跳过"); return; }
-      files.unshift({ name: f.name, size: fmtSize(f.size), time: now(), url: URL.createObjectURL(f) });
-      ok++;
-    })(list[i]);
-  }
-  renderFiles();
-  if (ok) showToast("已上传 " + ok + " 个文件（仅本机可见，需重新发布后访客才能下载）");
-}
-function downloadFile(i) {
-  var f = files[i];
-  if (f.url) {
-    var a = document.createElement("a");
-    a.href = f.url; a.download = f.name;
-    document.body.appendChild(a); a.click(); a.remove();
-  } else {
-    showToast("示例占位文件，正式文件待发布");
-  }
-}
-function removeFile(i) {
-  if (!admin) { showToast("访客无权删除文件"); return; }
-  if (files[i] && files[i].url) URL.revokeObjectURL(files[i].url);
-  files.splice(i, 1);
-  renderFiles();
-}
-
-document.getElementById("file-input").addEventListener("change", function () {
-  addFiles(this.files);
-  this.value = "";
-});
-var dz = document.getElementById("dropzone");
-["dragenter", "dragover"].forEach(function (e) {
-  dz.addEventListener(e, function (ev) { ev.preventDefault(); dz.classList.add("over"); });
-});
-["dragleave", "drop"].forEach(function (e) {
-  dz.addEventListener(e, function (ev) { ev.preventDefault(); dz.classList.remove("over"); });
-});
-dz.addEventListener("drop", function (ev) {
-  if (ev.dataTransfer && ev.dataTransfer.files) addFiles(ev.dataTransfer.files);
-});
-
-idbGetHandle();
-renderAnns();
-renderMsgs();
-renderFiles();
+// 页面加载时初始化
+initSupabase();
 </script>
 </body>
 </html>
